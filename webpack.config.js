@@ -1,8 +1,25 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
+
 const path = require('path');
 
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
+
+const monacoOptions = {
+	filename: "[name].monaco.worker.js",
+	languages: [
+		"css",
+		"html",
+		"javascript",
+		"json",
+		"markdown",
+		"scss",
+		"typescript"
+	]
+};
 
 module.exports = {
 	entry: {
@@ -27,29 +44,51 @@ module.exports = {
 				use: {
 					loader: 'svelte-loader',
 					options: {
-						emitCss: true,
+						css: true,
 						hotReload: true
 					}
 				}
 			},
 			{
-				test: /\.css$/,
+				test: /\.(sa|sc|c)ss$/,
 				use: [
-					/**
-					 * MiniCssExtractPlugin doesn't support HMR.
-					 * For developing, use 'style-loader' instead.
-					 * */
-					prod ? MiniCssExtractPlugin.loader : 'style-loader',
-					'css-loader'
+					'style-loader',
+					MiniCssExtractPlugin.loader,
+					'css-loader',
+					{
+						loader: 'sass-loader',
+						options: {
+							sassOptions: {
+								includePaths: [
+									'./theme',
+									'./node_modules'
+								]
+							}
+						}
+					}
 				]
+			},
+			{
+				test: /\.ttf$/,
+				use: ['file-loader']
 			}
 		]
 	},
 	mode,
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: '[name].css'
+			filename: "[name].css",
+			chunkFilename: "[name].[id].css"
+		}),
+		new MonacoWebpackPlugin(monacoOptions),
+		new OptimizeCssAssetsPlugin({
+			assetNameRegExp: /\.css$/g,
+			cssProcessor: require("cssnano"),
+			cssProcessorPluginOptions: {
+				preset: ["default", { discardComments: { removeAll: true } }]
+			},
+			canPrint: true
 		})
-	],
-	devtool: prod ? false: 'source-map'
+	].filter(Boolean),
+	devtool: prod ? false : 'source-map'
 };

@@ -1,11 +1,7 @@
 <script>
-	export let name;
+  import MonacoEditor from "./components/MonacoEditor.svelte";
+  import VideoCall from "./components/VideoCall.svelte";
 </script>
 
-<style>
-	h1 {
-		color: purple;
-	}
-</style>
-
-<h1>Hello {name}!</h1>
+<VideoCall />
+<MonacoEditor />

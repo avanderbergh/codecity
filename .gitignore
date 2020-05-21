@@ -2,6 +2,10 @@
 node_modules
 functions/node_modules
 public/bundle.*
+public/*.monaco.*
+public/*.ttf
+public/[0-9]*.[0-9]*.js
+public/[0-9]*.[0-9]*.css
 /dist
 src/config
 
