@@ -10,7 +10,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/javascript-node:0-10
 # ** [Optional] Uncomment this section to install additional packages. **
 
 ENV DEBIAN_FRONTEND=noninteractive
-# RUN sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+    RUN apt-get -y install --no-install-recommends openjdk-8-jre
 ENV DEBIAN_FRONTEND=dialog
 
 
