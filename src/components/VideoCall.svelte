@@ -1,11 +1,12 @@
 <script>
-  import AgoraRTC from "agora-rtc-sdk";
+  import { onMount } from "svelte";
+
+  let AgoraRTC;
+  onMount(async () => {
+    AgoraRTC = await import("agora-rtc-sdk");
+  });
 </script>
 
-<h1>AgoraRTC</h1>
-
-<style>
-  h1 {
-    color: powderblue;
-  }
-</style>
+<div class="container">
+  <h1>AgoraRTC</h1>
+</div>

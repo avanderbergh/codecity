@@ -1,22 +1,30 @@
 <script>
+  import { onMount } from "svelte";
   import Button from "@smui/button";
-  import * as monaco from "monaco-editor";
-  let container, section, editor;
+  import { themeData, editorOptions } from "../config/monaco";
+  export let content = "";
+  let monaco, attach, monacoContainer, editor;
 
-  import("monaco-editor").then(module => {
-    editor = monaco.editor.create(container, {
-      value: "//Hello",
-      language: "javascript"
-    });
+  onMount(async () => {
+    monaco = await import("monaco-editor");
+    monaco.editor.defineTheme("codecity", themeData);
+    editor = monaco.editor.create(attach, editorOptions);
     editor.layout();
-    monaco = module;
+    editor.getModel().onDidChangeContent(handleContentsChanged);
   });
+
+  const handleContentsChanged = e => {
+    content = editor.getModel().getValue();
+  };
+
   const handleResize = () => {
     console.log("Resize");
     if (editor) {
-      section.style.height = "0px";
+      monacoContainer.style.height = "0";
+      monacoContainer.style.width = "0";
       editor.layout();
-      section.style.height = "";
+      monacoContainer.style.height = "";
+      monacoContainer.style.width = "";
       editor.layout();
     }
   };
@@ -24,20 +32,16 @@
 
 <svelte:window on:resize={handleResize} />
 
-<h1>Monaco</h1>
-<Button>Hello</Button>
-<section class="section" bind:this={section}>
-  <div class="monaco-container" bind:this={container} />
+<section class="monaco-container" bind:this={monacoContainer}>
+  <div class="monaco" bind:this={attach} />
 </section>
 
 <style>
-  h1 {
-    color: blue;
-  }
-  .section {
-    height: 50%;
-  }
   .monaco-container {
+    height: 100%;
+    overflow: hidden;
+  }
+  .monaco {
     height: 100%;
   }
 </style>

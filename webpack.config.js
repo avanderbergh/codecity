@@ -21,6 +21,13 @@ const monacoOptions = {
 	]
 };
 
+const sassOptions = {
+	includePaths: [
+		'./theme',
+		'./node_modules'
+	]
+}
+
 module.exports = {
 	entry: {
 		bundle: ['./src/main.js']
@@ -57,14 +64,7 @@ module.exports = {
 					'css-loader',
 					{
 						loader: 'sass-loader',
-						options: {
-							sassOptions: {
-								includePaths: [
-									'./theme',
-									'./node_modules'
-								]
-							}
-						}
+						options: { sassOptions }
 					}
 				]
 			},
