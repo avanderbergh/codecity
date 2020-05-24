@@ -5,6 +5,16 @@
 @import "@material/typography/mdc-typography";
 @import "firebaseui/dist/firebaseui";
 
+:root {
+  --background-color: #0c0a20;
+
+  --theme-primary: #ff2afc;
+  --theme-on-primary: #ffd319;
+
+  --theme-secondary: #42c6ff;
+  --theme-on-secondary: #ff0081;
+}
+
 html,
 body {
   position: relative;
@@ -13,7 +23,8 @@ body {
 }
 
 body {
-  color: #333;
+  color: #fff;
+  background-color: var(--background-color);
   margin: 0;
   padding: 0;
   box-sizing: border-box;

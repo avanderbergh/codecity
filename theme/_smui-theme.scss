@@ -4,13 +4,28 @@
 
 @import "@material/theme/color-palette";
 
-$mdc-theme-primary: #3dd7ac;
-$mdc-theme-on-primary: #1a0e48;
+@import "@material/button/mdc-button";
+@import "@material/ripple/variables";
+@import "@material/theme/variables";
 
-$mdc-theme-secondary: #1a0e48;
-$mdc-theme-on-secondary: #fff;
+$mdc-theme-primary: #ff2afc;
+$mdc-theme-on-primary: #ffd319;
 
-$mdc-theme-background: #f0f0f0;
-$mdc-theme-surface: #f0f0f0;
+$mdc-theme-secondary: #42c6ff;
+$mdc-theme-on-secondary: #ff0081;
 
-$mdc-theme-error: $material-color-red-900;
+$mdc-theme-background: #0c0a20;
+$mdc-theme-surface: #24264f;
+
+$mdc-theme-error: #f4225a;
+
+$mdc-typography-styles-button: (
+  font-family: "Press Start 2P",
+  font-size: 16px,
+  text-transform: lowercase,
+  font-weight: 700,
+  letter-spacing: -0.1em,
+);
+
+$mdc-checkbox-mark-color: #ff0081;
+

@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import Button from "@smui/button";
   import { themeData, editorOptions } from "../config/monaco";
-  export let content = "";
+  import { content } from "../stores/content";
   let monaco, attach, monacoContainer, editor;
 
   onMount(async () => {
@@ -11,10 +11,15 @@
     editor = monaco.editor.create(attach, editorOptions);
     editor.layout();
     editor.getModel().onDidChangeContent(handleContentsChanged);
+    content.subscribe($content => {
+      console.log("$content", $content);
+      if ($content) editor.getModel().setValue($content);
+    });
   });
 
   const handleContentsChanged = e => {
-    content = editor.getModel().getValue();
+    const code = editor.getModel().getValue();
+    if ($content != code) content.set(code);
   };
 
   const handleResize = () => {

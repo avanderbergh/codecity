@@ -1,27 +1,32 @@
 <script>
+  import Nav from "../components/Nav.svelte";
   import MonacoEditor from "../components/MonacoEditor.svelte";
   import VideoCall from "../components/VideoCall.svelte";
   import Instructions from "../components/Instructions.svelte";
+  import DataConnection from "../components/DataConnection.svelte";
   export let params;
-  let content;
+  let currentObject;
 </script>
+
+<Nav />
 
 <div class="layout">
   <div class="editor">
-    <MonacoEditor {content} />
+    <MonacoEditor />
   </div>
   <div class="video">
     <VideoCall />
   </div>
   <div class="instructions">
-    <Instructions />
+    <Instructions { currentObject }/>
   </div>
 </div>
+<DataConnection {currentObject} />
 
 <style>
   .layout {
     display: grid;
-    height: 100%;
+    height: calc(100% - 49px);
     grid-template-areas:
       "video        editor"
       "instructions editor";
@@ -36,10 +41,12 @@
 
   .editor {
     grid-area: editor;
+    border-left: solid #42c6ff 1px;
   }
 
   .video {
     grid-area: video;
+    border-bottom: solid #42c6ff 1px;
   }
 
   .instructions {

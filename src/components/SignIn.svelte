@@ -26,3 +26,10 @@
 </script>
 
 <div id="firebase-auth-ui" />
+
+<style>
+  #firebase-auth-ui {
+    height: fit-content;
+    margin: auto;
+  }
+</style>

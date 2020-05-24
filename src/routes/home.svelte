@@ -3,9 +3,32 @@
   import SignIn from "../components/SignIn.svelte";
 </script>
 
-<h1>Home</h1>
+<div class="cover">
+  <div class="box">
+    <h1 class="logo-text">code<br/>city</h1>
+    <SignIn />
+  </div>
+</div>
 
-<a use:link href="/editor">Editor</a>
-<a use:link href="/call">Call</a>
+<style>
+  .cover {
+    background-image: url("/images/cover3.jpg");
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    display: grid;
+  }
 
-<SignIn/>
+  .box {
+    margin: auto;
+    display: block;
+    text-align: center;
+  }
+
+  .logo-text {
+    font-family: "Press Start 2P";
+    font-size: 8vw;
+    color: var(--theme-primary);
+  }
+</style>
