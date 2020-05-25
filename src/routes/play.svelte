@@ -4,6 +4,7 @@
   import VideoCall from "../components/VideoCall.svelte";
   import Instructions from "../components/Instructions.svelte";
   import DataConnection from "../components/DataConnection.svelte";
+  import { game } from "../stores/game";
   export let params;
   let currentObject;
 </script>
@@ -18,7 +19,8 @@
     <VideoCall />
   </div>
   <div class="instructions">
-    <Instructions { currentObject }/>
+    <Instructions {currentObject} />
+    <p>{JSON.stringify($game)}</p>
   </div>
 </div>
 <DataConnection {currentObject} />

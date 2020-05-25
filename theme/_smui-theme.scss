@@ -26,6 +26,13 @@ $mdc-typography-styles-button: (
   font-weight: 700,
   letter-spacing: -0.1em,
 );
+$mdc-typography-styles-textfield-input: (
+  font-family: "Press Start 2P",
+  font-size: 16px,
+  text-transform: lowercase,
+  font-weight: 700,
+  letter-spacing: -0.1em,
+);
 
 $mdc-checkbox-mark-color: #ff0081;
 

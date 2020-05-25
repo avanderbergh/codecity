@@ -6,6 +6,9 @@ service cloud.firestore {
       match /instructions/{instructionsId} {
         allow read, write;
       }
+      match /games/{gameId} {
+        allow read, write;
+      }
     }
   }
 }

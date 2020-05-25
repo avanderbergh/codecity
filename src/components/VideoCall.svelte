@@ -1,12 +1,13 @@
 <script>
   import { onMount } from "svelte";
+  import { game } from "../stores/game";
 
   let AgoraRTC;
   let connected = false;
 
   onMount(async () => {
     AgoraRTC = await import("agora-rtc-sdk");
-    createClient();
+    createClient($game);
   });
 
   const rtc = {
@@ -28,18 +29,19 @@
 
   let remoteStreamContainer;
 
-  const createClient = () => {
+  const createClient = $game => {
+    if (!$game && !$game.id) return;
     rtc.client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });
     rtc.client.init(
-      option.appID,
+      $game.appID,
       () => {
         console.log("Init Success");
         rtc.client.join(
           null,
-          option.channel,
+          $game.id,
           null,
           uid => {
-            console.log("Joined Channel " + option.channel + ". UID: " + uid);
+            console.log("Joined Channel " + $game.id + ". UID: " + uid);
 
             rtc.params.uid = uid;
             rtc.localStream = AgoraRTC.createStream({
@@ -149,7 +151,8 @@
   #remote-stream {
     width: 100%;
     height: 100%;
-    transform: scaleX(-1);
+    transform: scaleX(-1) rotate(180deg);
+    image-rendering: pixelated;
   }
   .video-call {
     position: relative;
