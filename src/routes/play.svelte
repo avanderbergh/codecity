@@ -1,4 +1,5 @@
 <script>
+  import { onMount } from "svelte";
   import Nav from "../components/Nav.svelte";
   import MonacoEditor from "../components/MonacoEditor.svelte";
   import VideoCall from "../components/VideoCall.svelte";
@@ -7,23 +8,33 @@
   import { game } from "../stores/game";
   export let params;
   let currentObject;
+  let gameLoaded = false;
+
+  onMount(async () => {
+    console.log("GameId: ", params.id);
+    await game.init(params.id);
+    gameLoaded = true;
+  });
 </script>
 
 <Nav />
 
-<div class="layout">
-  <div class="editor">
-    <MonacoEditor />
+{#if !gameLoaded}
+  <p>Loading</p>
+{:else}
+  <div class="layout">
+    <div class="editor">
+      <MonacoEditor />
+    </div>
+    <div class="video">
+      <VideoCall />
+    </div>
+    <div class="instructions">
+      <Instructions />
+    </div>
   </div>
-  <div class="video">
-    <VideoCall />
-  </div>
-  <div class="instructions">
-    <Instructions {currentObject} />
-    <p>{JSON.stringify($game)}</p>
-  </div>
-</div>
-<DataConnection {currentObject} />
+  <DataConnection />
+{/if}
 
 <style>
   .layout {

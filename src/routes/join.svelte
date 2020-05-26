@@ -8,21 +8,6 @@
 
   let code = "";
   let loaded = false;
-
-  const handleJoinButtonClicked = async () => {
-    const games = await firestore
-      .collection("games")
-      .where("code", "==", code)
-      .get();
-    if (games.empty) {
-      console.log("mo game found");
-    } else {
-      console.log("Found ", games.docs.length, " games");
-      const gameDoc = games.docs[0];
-      push(`/play/${gameDoc.id}`);
-      $game = { id: gameDoc.id, ...gameDoc.data() };
-    }
-  };
 </script>
 
 <div class="join-backdrop">
@@ -54,7 +39,7 @@
         placeholder="enter code"
       />
       <div class="button-container">
-        <button class="button code" on:click={handleJoinButtonClicked}>
+        <button class="button code" on:click={push(`/play/${code}`)}>
           Join Game
         </button>
       </div>

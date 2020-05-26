@@ -1,13 +1,8 @@
 <script>
-  import { selectedObject } from "../stores/selectedObject.js";
+  import { game } from "../stores/game";
 </script>
 
-<div class="container">
-  {#if $selectedObject}
-    <h1>{$selectedObject.name}</h1>
-    <p>{$selectedObject.methods}</p>
-  {/if}
-</div>
+<div class="container" />
 
 <style>
   .container {

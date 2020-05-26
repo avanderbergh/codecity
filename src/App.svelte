@@ -11,7 +11,7 @@
   const routes = {
     "/": home,
     "/join": join,
-    "/play/:code": play,
+    "/play/:id": play,
     "*": notFound
   };
 </script>
