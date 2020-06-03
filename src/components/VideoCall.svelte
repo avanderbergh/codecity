@@ -27,7 +27,70 @@
     token: null
   };
 
-  let remoteStreamContainer;
+  let remoteStreamContainer, remoteStreamCanvas;
+
+  const startVideoRenderer = () => {
+    const video = remoteStreamContainer.querySelector("video");
+    if (!video) {
+      setTimeout(() => startVideoRenderer(), 500);
+      return;
+    }
+
+    const ctx = remoteStreamCanvas.getContext("2d");
+    ctx.imageSmoothingEnabled = false;
+    ctx.mozImageSmoothingEnabled = false;
+    ctx.webkitImageSmoothingEnabled = false;
+    ctx.msImageSmoothingEnabled = false;
+
+    const cw = Math.floor(remoteStreamCanvas.clientWidth);
+    const ch = Math.floor(remoteStreamCanvas.clientHeight);
+
+    remoteStreamCanvas.width = cw;
+    remoteStreamCanvas.height = ch;
+
+    ctx.drawImage(video, 0, 0, cw, ch);
+
+    var imageData = ctx.getImageData(
+      0,
+      0,
+      remoteStreamCanvas.width,
+      remoteStreamCanvas.height
+    );
+    var depth = 8;
+
+    var data = imageData.data;
+
+    //Matrix
+    var threshold_map_4x4 = [
+      [1, 9, 3, 11],
+      [13, 5, 15, 7],
+      [4, 12, 2, 10],
+      [16, 8, 14, 6]
+    ];
+
+    //imageData
+    var width = imageData.width;
+    var height = imageData.height;
+    var pixel = imageData.data;
+    var x, y, a, b;
+
+    //filter
+    for (x = 0; x < width; x++) {
+      for (y = 0; y < height; y++) {
+        a = (x * height + y) * 4;
+        b = threshold_map_4x4[x % 4][y % 4];
+        pixel[a + 0] = (((pixel[a + 0] + b) / depth) | 0) * depth;
+        pixel[a + 1] = (((pixel[a + 1] + b) / depth) | 0) * depth;
+        pixel[a + 2] = (((pixel[a + 2] + b) / depth) | 0) * depth;
+        pixel[a + 3] = (((pixel[a + 3] + b) / depth) | 0) * depth;
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    remoteStreamContainer.style.zIndex = -10;
+
+    setTimeout(() => startVideoRenderer(), 500);
+  };
 
   const createClient = $game => {
     if (!$game && !$game.id) return;
@@ -54,6 +117,7 @@
             rtc.localStream.init(
               () => {
                 console.log("Local stream initialized");
+                startVideoRenderer();
                 rtc.localStream.play(
                   "local-stream",
                   { fit: "contain" },
@@ -135,10 +199,20 @@
     <div id="local-stream" />
     <!-- ToDo Detect Firefox and rotate the video around if yes. -->
     <div id="remote-stream" bind:this={remoteStreamContainer} />
+    <canvas bind:this={remoteStreamCanvas} />
   </div>
 </section>
 
 <style>
+  canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 9998;
+    width: 100%;
+    height: 100%;
+    transform: scaleY(-1);
+  }
   #local-stream {
     width: 20%;
     height: 20%;
@@ -152,8 +226,9 @@
     width: 100%;
     height: 100%;
     transform: scaleX(-1) rotate(180deg);
-    image-rendering: pixelated;
+    z-index: -10 !important;
   }
+
   .video-call {
     position: relative;
     display: grid;

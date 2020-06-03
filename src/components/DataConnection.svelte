@@ -2,7 +2,6 @@
   import Button, { Label, Icon } from "@smui/button";
 
   import { content } from "../stores/content";
-  import { selectedObject } from "../stores/selectedObject.js";
 
   import { game } from "../stores/game";
 
@@ -13,34 +12,14 @@
       : commands.push({ type, action, target });
   };
 
-  const door = {
-    locked: true,
-    open: () => {
-      addCommand("door", "open", "Door");
-    }
-  };
-
-  const drone = {
-    move: (direction, distance) => {
-      const args = "" + direction + "," + distance;
-      addCommand("drone", "move", "Drone", args);
-    },
-    aim: target => {
-      addCommand("drone", "aim", "Drone", target);
-    },
-    fire: force => {
-      addCommand("drone", "fire", "Drone", force + "");
-    }
-  };
-
   const handleSendCommandsClicked = async () => {
     commands = [];
-    let code = $selectedObject.libraryCode
-      ? $selectedObject.libraryCode + " \n"
+    let code = $game.selected.libraryCode
+      ? $game.selected.libraryCode + " \n"
       : " \n";
     code += $content + " \n";
 
-    code += $selectedObject.testCode;
+    code += $game.selected.testCode;
     console.log("Executing", code);
     const oldConsole = console;
     console = {

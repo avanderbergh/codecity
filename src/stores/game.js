@@ -16,6 +16,8 @@ function createGameStore() {
                 this._doc = firestore.collection("games").doc(code);
                 this.loading.set(true);
                 this._doc.onSnapshot(doc => {
+                    console.log("doc", doc);
+                    console.log("setting", doc.data())
                     this.id = doc.id;
                     set({ id: doc.id, ...doc.data() });
                     this.loading.set(false);
@@ -29,7 +31,6 @@ function createGameStore() {
             })
         },
         setInstructions: async function (instructions) {
-            console.log('this', this)
             await this._doc.update({ instructions });
         }
     }

@@ -9,33 +9,38 @@ apiV1.use(cors({ origin: true }));
 
 apiV1.post('/game', async (req, res) => {
     const payload = req.body;
-    const code = generateCode(6);
-    const doc = await db().collection("games").add({ ...payload, code });
+    let id, gameDoc;
+    let tries = 0;
+    do {
+        id = generateCode(6);
+        gameDoc = await db().collection("games").doc(id).get();
+        if (++tries > 5) {
+            res.send(500, "Could not create game after 5 tries");
+            return;
+        }
+    } while (gameDoc.exists);
+    const doc = await db().collection("games").doc(id).set({ id, ...payload });
     console.log('doc', doc.id);
-    res.send({ id: doc.id, code });
+    res.send({ id });
 });
 
-apiV1.get('/game/:code', async (req, res) => {
-    const games = await db().collection("games").where("code", "==", req.params.code).get();
-    if (games.empty) {
-        res.send(404, "No games found!");
+apiV1.post('/game/:id/select', async (req, res) => {
+    await db().collection("games").doc(req.params.id).update ({selected: req.body})
+});
+
+apiV1.get('/game/:id', async (req, res) => {
+    const game = await db().collection("games").doc(req.params.id).get();
+    if (!game.exists) {
+        res.send(404, "Game not found");
         return;
     }
-    const game = { id: games.docs[0].id, ...games.docs[0].data() }
-    res.send(game);
+    res.send(game.data());
 });
 
-apiV1.get('/game/:gameId/instructions', async (req, res) => {
-    const result = await db().collection("games").doc(req.params.gameId).get();
+apiV1.get('/game/:id/instructions', async (req, res) => {
+    const result = await db().collection("games").doc(req.params.id).get();
     const game = result.data()
     res.send(game.instructions);
-});
-
-apiV1.post('/game/:gameId/instructions', async (req, res) => {
-    const payload = req.body;
-    console.log("payload", payload);
-    await db().collection("games").doc(req.params.gameId).update({ instructions: payload });
-    res.send("OK");
 });
 
 const generateCode = length => Math.random().toString(36).substr(2, length);
