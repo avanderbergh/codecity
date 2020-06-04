@@ -1,12 +1,13 @@
 <script>
   import { link } from "svelte-spa-router";
   import SignIn from "../components/SignIn.svelte";
+  import Background from "../components/Background.svelte";
 </script>
 
 <div class="cover">
   <div class="box">
     <div class="logo">
-      <h1 class="logo-text" data-text="code city">code<br/>city</h1>
+      <img src="images/MainLogo.svg" alt="Logo">
     </div>
     <SignIn />
   </div>

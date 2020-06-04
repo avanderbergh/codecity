@@ -1,5 +1,7 @@
 <nav class="top-nav">
-  <span class="logo">code city</span>
+  <span class="logo">
+    <img src="images/NavLogo.svg" alt="Logo" />
+  </span>
 </nav>
 
 <style>

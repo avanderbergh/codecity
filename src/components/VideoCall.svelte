@@ -223,10 +223,12 @@
   }
 
   #remote-stream {
-    width: 100%;
-    height: 100%;
     transform: scaleX(-1) rotate(180deg);
     z-index: -10 !important;
+  }
+
+  #remote-stream video {
+    z-index: -1000;
   }
 
   .video-call {
