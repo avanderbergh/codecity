@@ -1,23 +1,54 @@
 <script>
+  import { tick } from "svelte";
+  import { spring } from "svelte/motion";
   import { link } from "svelte-spa-router";
   import SignIn from "../components/SignIn.svelte";
-  import Background from "../components/Background.svelte";
+  import HeroImage from "../components/HeroImage.svelte";
+
+  let scrollY, outerHeight, video;
+  let animating = false;
+
+  let currentTime = spring(10, {
+    stiffness: 0.01,
+    damping: 0.1
+  });
+
+  $: (async () => {
+    if (video) {
+      video.currentTime = (scrollY / outerHeight) * 20;
+    }
+  })();
 </script>
 
-<div class="cover">
-  <div class="box">
-    <div class="logo">
-      <img src="images/MainLogo.svg" alt="Logo">
+<svelte:window bind:scrollY bind:outerHeight />
+
+<main>
+  <section id="video-scroll">
+    <video
+      src="images/intro.webm"
+      preload="auto"
+      autobuffer
+      bind:this={video}
+    />
+    <div id="scroll-indicator">
+      <h1>--- Scroll to Begin ---</h1>
     </div>
-    <SignIn />
-  </div>
-</div>
+  </section>
+  <section id="sign-in">
+    <HeroImage />
+    <div class="cover">
+      <div class="box">
+        <div class="logo">
+          <img src="images/MainLogo.svg" alt="Logo" />
+        </div>
+        <SignIn />
+      </div>
+    </div>
+  </section>
+</main>
 
 <style>
   .cover {
-    background-image: url("/images/cover.jpg");
-    background-position: center;
-    background-size: cover;
     width: 100%;
     height: 100%;
     display: grid;
@@ -38,61 +69,43 @@
     text-align: center;
   }
 
-  .logo-text {
+  #video-scroll {
+    height: 250vh;
+    width: 100%;
+    display: grid;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+  }
+
+  #video-scroll video {
+    position: sticky;
+    object-fit: cover;
+    object-position: center;
+    z-index: 9999998;
     top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #scroll-indicator {
+    width: 100vw;
+    height: 100vh;
     position: absolute;
-    font-size: 8vw;
-    font-family: "Press Start 2P", cursive;
-    color: #ffd319;
-    animation-name: logo-animation;
-    animation-duration: 4s;
-    animation-iteration-count: infinite;
   }
 
-  .logo-text:hover {
-    animation-duration: 2ms;
-    animation-name: logo-animation-hover;
+  #video-scroll h1 {
+    z-index: 9999999;
+    bottom: 10vh;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    font-family: "Press Start 2P";
+    color: #ff0081;
   }
 
-  @keyframes logo-animation-hover {
-    0% {
-      text-shadow: 0.5vw 0.5vw 0 #ff0081, -0.5vw -0.5vw 0 #42c6ff;
-    }
-    25% {
-      text-shadow: 0 0.5vw 0 #ff0081, 0.5vw -0.5vw 0 #42c6ff;
-    }
-    50% {
-      text-shadow: 0 0 0 #ff0081, 0 0 0 #42c6ff;
-    }
-    75% {
-      text-shadow: -0.5vw 0 0 #ff0081, 0.5vw 0 0 #42c6ff;
-    }
-    100% {
-      text-shadow: -0.5vw -0.5vw 0 #ff0081, 0.5vw 0.5vw 0 #42c6ff;
-    }
-  }
-
-  @keyframes logo-animation {
-    0% {
-      text-shadow: none;
-    }
-    96% {
-      text-shadow: none;
-    }
-    97% {
-      text-shadow: 0 0.5vw 0 #ff0081, 0.5vw -0.5vw 0 #42c6ff;
-    }
-    98% {
-      text-shadow: 0 0 0 #ff0081, 0 0 0 #42c6ff;
-    }
-    99% {
-      text-shadow: -0.5vw 0 0 #ff0081, 0.5vw 0 0 #42c6ff;
-    }
-    100% {
-      text-shadow: -0.5vw -0.5vw 0 #ff0081, 0.5vw 0.5vw 0 #42c6ff;
-    }
+  #sign-in {
+    position: relative;
+    height: 100vh;
   }
 </style>

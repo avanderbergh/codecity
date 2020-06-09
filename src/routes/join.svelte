@@ -5,11 +5,13 @@
   import { firestore } from "../lib/firebase";
   import { push, pop, replace } from "svelte-spa-router";
   import { game } from "../stores/game";
+  import HeroImage from "../components/HeroImage.svelte";
 
   let code = "";
   let loaded = false;
 </script>
 
+<HeroImage />
 <div class="join-backdrop">
   <div class="join-container">
     <div class="box">
@@ -56,9 +58,6 @@
     width: 100%;
     height: 100%;
     position: relative;
-    background: url("images/cover.jpg");
-    background-size: cover;
-    background-position: center;
     display: grid;
   }
   .join-container {
