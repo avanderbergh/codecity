@@ -18,7 +18,7 @@
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [8080, 5000],
+	"forwardPorts": [8080, 8081, 5000, 5001, 5002, 4000],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "yarn global add firebase-tools && yarn install",
