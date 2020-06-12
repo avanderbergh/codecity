@@ -30,8 +30,12 @@ function createGameStore() {
                 });
             })
         },
-        setInstructions: async function (instructions) {
-            await this._doc.update({ instructions });
+        setInstructions: async function (code, instructions) {
+            console.log("code", code);
+            await this._doc.update({
+                instructions,
+                "selected.currentCode": code
+            });
         }
     }
 }

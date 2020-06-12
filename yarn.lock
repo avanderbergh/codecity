@@ -300,6 +300,17 @@
     "@material/typography" "^3.1.0"
     tslib "^1.9.3"
 
+"@material/icon-button@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@material/icon-button/-/icon-button-3.2.0.tgz#7a132fffe5be347db77281d63e7e4c5ffe0881ca"
+  integrity sha512-UTX1q4x5FxntBeb5TxBsXIjbhwFjQxJxovaUGo8+eUL9V9tU6rJ3NnlrFirx9gZnFIU1Xpssm91NCItVZy/Dpg==
+  dependencies:
+    "@material/base" "^3.1.0"
+    "@material/feature-targeting" "^3.1.0"
+    "@material/ripple" "^3.2.0"
+    "@material/theme" "^3.1.0"
+    tslib "^1.9.3"
+
 "@material/line-ripple@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@material/line-ripple/-/line-ripple-3.1.0.tgz#63a4f41f2a2a5df01c2e229a76fc2b0735cd62c0"
@@ -346,6 +357,24 @@
   integrity sha512-Oyvs7YjHfByA0e9IVVp7ojAlPwgSu3Bl0cioiE0OdkidkAaNu0izM2ryRzMBDH5o8+lRD0kpZoT+9CVVCdaYIg==
   dependencies:
     "@material/feature-targeting" "^3.1.0"
+
+"@material/snackbar@^3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@material/snackbar/-/snackbar-3.2.0.tgz#ca59459d18db2e5f79078554c09a813bca55bd16"
+  integrity sha512-WVA+dJYbzDMlPpXCdkGEQqi1+tHqV8a9tKBYlr4Vy+3UUaEl6gIomRiWNnagoodhOwGQhyugCeLKHtmVn72IZA==
+  dependencies:
+    "@material/animation" "^3.1.0"
+    "@material/base" "^3.1.0"
+    "@material/button" "^3.2.0"
+    "@material/dom" "^3.1.0"
+    "@material/feature-targeting" "^3.1.0"
+    "@material/icon-button" "^3.2.0"
+    "@material/ripple" "^3.2.0"
+    "@material/rtl" "^3.2.0"
+    "@material/shape" "^3.1.0"
+    "@material/theme" "^3.1.0"
+    "@material/typography" "^3.1.0"
+    tslib "^1.9.3"
 
 "@material/textfield@^3.2.0":
   version "3.2.0"
@@ -463,6 +492,15 @@
     "@material/floating-label" "^3.2.0"
     "@smui/common" "^1.0.0-beta.21"
 
+"@smui/icon-button@^1.0.0-beta.21":
+  version "1.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@smui/icon-button/-/icon-button-1.0.0-beta.21.tgz#f8131c0997671e0429be92992091689e83a8e90c"
+  integrity sha512-OyCQhoX8BJBmjal0AAS3d1NMxyxC+F2H+ZVJu9rqnuDWbHy/+H14c/0rochhXwpCMZ87Z23l1W0dU6EDDh95jw==
+  dependencies:
+    "@material/icon-button" "^3.2.0"
+    "@smui/common" "^1.0.0-beta.21"
+    "@smui/ripple" "^1.0.0-beta.21"
+
 "@smui/line-ripple@^1.0.0-beta.21":
   version "1.0.0-beta.21"
   resolved "https://registry.yarnpkg.com/@smui/line-ripple/-/line-ripple-1.0.0-beta.21.tgz#62497fe59d9ac963cf1e02ca7b26db37bb52a30d"
@@ -485,6 +523,17 @@
   integrity sha512-IrATHAX0UfdcfzDCaLvTQC4xWHp/kGLSIl4zaCz7qXpbSKeW1peVAmXo+9u9eONIbTttQb8VaRIOrOVi0mJyaQ==
   dependencies:
     "@material/ripple" "^3.2.0"
+
+"@smui/snackbar@^1.0.0-beta.21":
+  version "1.0.0-beta.21"
+  resolved "https://registry.yarnpkg.com/@smui/snackbar/-/snackbar-1.0.0-beta.21.tgz#a9ee90e82857486b66d80eb64c3ac681bb9fd57f"
+  integrity sha512-up1+xbkpYQuhbLLx3XTeLH3Xl42PaWrq1JFeefInU3MuVpitIcBOpmBnnuffVPoYdqCVO5RgN9wwKHz2Bmzxbw==
+  dependencies:
+    "@material/feature-targeting" "^3.1.0"
+    "@material/snackbar" "^3.2.0"
+    "@smui/button" "^1.0.0-beta.21"
+    "@smui/common" "^1.0.0-beta.21"
+    "@smui/icon-button" "^1.0.0-beta.21"
 
 "@smui/textfield@^1.0.0-beta.21":
   version "1.0.0-beta.21"
